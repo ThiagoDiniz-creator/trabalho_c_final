@@ -34,19 +34,28 @@ void inserirGabaritoTerminal(int length, int pontuacao[][2], char gabarito[][10]
         scanf("%d", &pontuacao[k][0]);
         __fpurge(stdin);
 
-        for (int j = 0; j < 50; j++)
+        if (!(pontuacao[k][0] > 9999 && pontuacao[k][0] < 100000))
         {
-            printf("%d:", j + 1);
-            gabarito[k][j] = tolower(getchar());
-            __fpurge(stdin);
-
-            if (!(gabarito[k][j] == 'a' || gabarito[k][j] == 'b' || gabarito[k][j] == 'c' || gabarito[k][j] == 'd' || gabarito[k][j] == 'e'))
-            {
-                printf("O valor digitado precisa ser uma letra válida (a, b, c, d, e) \n");
-                j--;
-            }
+            printf("A matrícula deve conter 5 dígitos, e não podem existir zeros no ínicio do número.");
+            k--;
         }
-        system("clear");
+        else
+        {
+
+            for (int j = 0; j < 50; j++)
+            {
+                printf("%d:", j + 1);
+                gabarito[k][j] = tolower(getchar());
+                __fpurge(stdin);
+
+                if (!(gabarito[k][j] == 'a' || gabarito[k][j] == 'b' || gabarito[k][j] == 'c' || gabarito[k][j] == 'd' || gabarito[k][j] == 'e'))
+                {
+                    printf("O valor digitado precisa ser uma letra válida (a, b, c, d, e) \n");
+                    j--;
+                }
+            }
+            system("clear");
+        }
     }
 }
 
@@ -89,19 +98,42 @@ void terminalMain()
 {
 
     char gabaritoOficial[51] = {'a', 'b', 'c', 'd', 'e', 'e', 'd', 'c', 'b', 'a', 'a', 'b', 'c', 'd', 'e', 'e', 'd', 'c', 'b', 'a', 'a', 'b', 'c', 'd', 'e', 'e', 'd', 'c', 'b', 'a', 'a', 'b', 'c', 'd', 'e', 'e', 'd', 'c', 'b', 'a', 'a', 'b', 'c', 'd', 'e', 'e', 'd', 'c', 'b', 'a', '\0'};
-    unsigned int length = 0;
+    int length = 0, success = 0;
+    char term;
     system("clear");
 
-    printf("\nQuantas provas gostaria de registrar: ");
-    scanf("%d", &length);
+    while (success != 1)
+    {
+        printf("\nQuantas provas gostaria de registrar: ");
+        if (scanf("%d%c", &length, &term) != 2 || term != '\n')
+        {
+            system("clear");
 
-    char gabarito[length][10];
-    int pontuacao[length][2];
+            printf("O número de provas deve ser um valor númerico");
+            __fpurge(stdin);
+        }
+        else
+        {
+            if (length > 0)
+            {
 
-    inserirGabaritoTerminal(length, pontuacao, gabarito);
-    calcularNotaTerminal(length, gabarito, gabaritoOficial, pontuacao);
-    ordenandoClassificacao(pontuacao, length);
-    inserirResultadoTxt(pontuacao, length);
+                success = 1;
+                char gabarito[length][10];
+                int pontuacao[length][2];
 
-    printf("A classificação foi concluída com sucesso. Um arquivo chamada 'notasClassificadas.txt' contém a classificação exibida acima.\n");
+                inserirGabaritoTerminal(length, pontuacao, gabarito);
+                calcularNotaTerminal(length, gabarito, gabaritoOficial, pontuacao);
+                ordenandoClassificacao(pontuacao, length);
+                inserirResultadoTxt(pontuacao, length);
+
+                printf("A classificação foi concluída com sucesso. Um arquivo chamada 'notasClassificadas.txt' contém a classificação exibida acima.\n");
+            }
+            else
+            {
+                system("clear");
+
+                printf("O valor deve ser maior do que 0");
+            }
+        }
+    }
 }
