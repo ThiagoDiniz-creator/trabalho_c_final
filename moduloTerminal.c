@@ -126,7 +126,7 @@ void terminalMain()
                 ordenandoClassificacao(pontuacao, length);
                 inserirResultadoTxt(pontuacao, length);
 
-                printf("A classificação foi concluída com sucesso. Um arquivo chamada 'notasClassificadas.txt' contém a classificação exibida acima.\n");
+                printf("A classificação foi concluída com sucesso. Um arquivo chamada 'notasClassificadasTerminal.txt' contém a classificação exibida acima.\n");
             }
             else
             {
