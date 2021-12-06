@@ -124,29 +124,30 @@ double FuncSaque(long int cpf, int senha, long double saldo)
 
     printf("\n Digite o valor do saque: ");
     scanf("%Lf", &Valor);
-    if(Valor > 0 && Valor < saldo){
-
         for (int i = 0; i < MAX; i++)
         {
             if(cpf == func[i].cpf  && senha == func[i].senha)
             {   
-                printf("\n Confirme sua senha: ");
-                scanf("%d", &senha);
-                if(senha == func[i].senha)
-                {
-                    func[i].saldo = func[i].saldo - Valor;
-                }
-                else
-                {
-                    printf("Saque negado.");
+                if(Valor > 0 || Valor < saldo){
+    
+                    printf("\n Confirme sua senha: ");
+                    scanf("%d", &senha);
+                    if(senha == func[i].senha)
+                    {
+                        func[i].saldo = func[i].saldo - Valor;
+                    }
+                    else
+                    {
+                        printf("Deposito negado.");
+                    }
                 }
             }
+            else
+            {
+                printf("O valor do saque não pode ser negativo nem nulo.");
+            } 
         }
-    } 
-    else
-    {
-        printf("O valor do saque não pode ser negativo nem nulo.");
-    }   
+
 }
 
 double FunDeposito(long int cpf, int senha){
@@ -239,7 +240,6 @@ int ExibirDados(long int cpf, int senha)
                     system("clear");
                     break;
                 case 2:
-                    system("clear");
                     printf("\n  Nome: %s  Cpf: %ld", func[i].nome, func[i].cpf);
                     printf("\t Saldo disponivel: %.2Lf \n", func[i].saldo);
                     saldo = func[i].saldo;
